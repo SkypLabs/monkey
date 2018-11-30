@@ -1,0 +1,14 @@
+FROM debian:stretch-slim
+
+LABEL MAINTAINER="skyper <skyper@skyplabs.net>"
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends python-pip python-dev python-setuptools python-wheel libffi-dev upx libssl-dev libc++1 gcc-multilib
+
+COPY requirements.txt /tmp
+RUN pip install -r /tmp/requirements.txt
+
+WORKDIR /usr/src/app
+CMD ["./build_linux.sh"]
